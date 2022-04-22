@@ -1,0 +1,25 @@
+.container-signup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100vh;
+    background-image: url(../../assets//background.svg);
+    background-size: cover;
+}
+
+.content-signup {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    height: 781px;
+    width: 513px;
+    background-color: #fff;
+}
+
+.content-signup form,
+label {
+    display: flex;
+    flex-direction: column;
+}
