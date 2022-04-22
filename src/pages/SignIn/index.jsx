@@ -35,7 +35,9 @@ function SignIn() {
                         />
                     </label>
 
-                    <button>Entrar</button>
+                    <Link to='/dashboard'>
+                        <button>Entrar</button>
+                    </Link>
                 </form>
             </div>
         </div>

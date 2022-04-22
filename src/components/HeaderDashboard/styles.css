@@ -1,0 +1,25 @@
+header {
+    height: 120px;
+    position: relative;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 42px;
+    right: 100px;
+}
+
+.user h3 {
+    margin-left: 7.1px;
+    margin-right: 40px;
+    color: #fff;
+}
+
+.user .logout {
+    position: absolute;
+    top: 15.5px;
+    right: 0px;
+    cursor: pointer;
+}
