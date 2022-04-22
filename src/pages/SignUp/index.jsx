@@ -1,8 +1,10 @@
+import Logo from '../../components/Logo';
 import './styles.css';
 
 function SignUp() {
     return (
         <div className="container-signup">
+            <Logo />
             <div className="content-signup">
                 <div className="title-signup">
                     <h1>Cadastre-se</h1>
@@ -32,7 +34,10 @@ function SignUp() {
                             type="password"
                         />
                     </label>
+
+                    <button>Cadastrar</button>
                 </form>
+                <a href='#'>Já tem cadastro? Clique aqui!</a>
             </div>
         </div>
     );
