@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Logo from '../../components/Logo';
 import './styles.css';
 
@@ -37,7 +38,9 @@ function SignUp() {
 
                     <button>Cadastrar</button>
                 </form>
-                <a href='#'>Já tem cadastro? Clique aqui!</a>
+                <Link to='/sign-in'>
+                    <a href='#'>Já tem cadastro? Clique aqui!</a>
+                </Link>
             </div>
         </div>
     );

@@ -62,10 +62,6 @@ label {
     cursor: pointer;
 }
 
-.content-signup button:hover {
-    opacity: 0.9;
-}
-
-.content-signup a {
+.content-signup p {
     text-decoration: none;
 }

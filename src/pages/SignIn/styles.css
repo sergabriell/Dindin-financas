@@ -1,0 +1,98 @@
+.container-signin {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-image: url('../../assets//background.svg');
+    background-size: cover;
+
+    height: 100vh;
+}
+
+.content-signin-right {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 122px;
+
+    height: 535px;
+    width: 513px;
+    background: #FFF;
+}
+
+.content-signin-right h2 {
+    margin: 60px 0 48px 0;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 33px;
+    color: #7978D9;
+}
+
+.content-signin-right input {
+    width: 450px;
+    height: 63px;
+    margin: 8px 0 31px 0;
+    padding-left: 10px;
+    font-size: 16px;
+
+    background: #FFFFFF;
+    border: 1px solid #555555;
+    border-radius: 5px;
+}
+
+.content-signin-right button {
+    all: unset;
+    width: 450px;
+    height: 52px;
+    font-weight: 700;
+    font-size: 14px;
+
+    text-align: center;
+    color: #FFF;
+    background: #7978D9;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.content-signin-right button:hover {
+    opacity: 0.9;
+}
+
+.content-signin-left {
+    margin-left: 100px;
+}
+
+.content-signin-left h1 {
+    font-weight: 700;
+    font-size: 52px;
+    line-height: 62px;
+    color: #FFF;
+    margin-bottom: 33px;
+}
+
+.content-signin-left p {
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 33px;
+    color: #FFF;
+    margin-bottom: 43px;
+}
+
+.content-signin-left span {
+    color: #7978D9;
+}
+
+.content-signin-left button {
+    all: unset;
+    width: 284px;
+    height: 52px;
+    text-align: center;
+
+    color: #FFF;
+    background: #7978D9;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.content-signin-left button:hover {
+    opacity: 0.9;
+}
