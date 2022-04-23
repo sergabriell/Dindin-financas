@@ -1,8 +1,44 @@
 import './styles.css';
 import Logo from '../../components/Logo';
-import { Link } from 'react-router-dom';
+import api from '../../services/api';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { setItem } from '../../utils/localStorage';
 
 function SignIn() {
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+
+        if (!email || !password) {
+            return;
+        }
+
+        try {
+            const response = await api.post('/login', {
+                email,
+                senha: password
+            })
+
+            if (response.status > 204) {
+                return;
+            }
+
+            const { token, usuario } = response.data;
+
+            setItem('token', token);
+            setItem('userId', usuario.id);
+
+            navigate('/dashboard');
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
+    }
+
     return (
         <div className="container-signin">
             <Logo />
@@ -21,23 +57,25 @@ function SignIn() {
             </div>
             <div className="content-signin-right">
                 <h2>Login</h2>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <label>
                         E-mail
                         <input
                             type='text'
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </label>
                     <label>
                         Password
                         <input
                             type='password'
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>
 
-                    <Link to='/dashboard'>
-                        <button>Entrar</button>
-                    </Link>
+                    <button>Entrar</button>
                 </form>
             </div>
         </div>
