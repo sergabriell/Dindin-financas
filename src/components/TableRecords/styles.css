@@ -1,0 +1,22 @@
+.data-records {
+    display: grid;
+    grid-template-columns: repeat(6, 180px);
+    text-align: center;
+    font-weight: bold;
+    place-items: center;
+    height: 60px;
+    border-bottom: 1px solid #E0E0E0;
+}
+
+.format-date {
+    margin-left: -52px;
+}
+
+.editing-area {
+    display: flex;
+    gap: 12px;
+}
+
+.editing-area img {
+    cursor: pointer;
+}
