@@ -63,6 +63,7 @@ function SignIn() {
                         <input
                             type='text'
                             value={email}
+                            required
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </label>
@@ -71,6 +72,7 @@ function SignIn() {
                         <input
                             type='password'
                             value={password}
+                            required
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>
