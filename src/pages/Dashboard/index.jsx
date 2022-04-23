@@ -1,6 +1,5 @@
-import HeaderDashboard from '../../components/HeaderDashboard';
 import './styles.css';
-
+import HeaderDashboard from '../../components/HeaderDashboard';
 import TableRecords from '../../components/TableRecords';
 import HeaderTable from '../../components/TableRecords/HeaderTable';
 
