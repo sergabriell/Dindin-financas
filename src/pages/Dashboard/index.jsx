@@ -1,6 +1,9 @@
 import HeaderDashboard from '../../components/HeaderDashboard';
 import './styles.css';
 
+import TableRecords from '../../components/TableRecords';
+import HeaderTable from '../../components/TableRecords/HeaderTable';
+
 
 function Dashboard() {
     return (
@@ -8,15 +11,8 @@ function Dashboard() {
             <HeaderDashboard />
             <div className="content-dashboard">
                 <div className="info-records">
-                    <div className="infos">
-                        <div className="date">
-                            <h4>Data</h4>
-                        </div>
-                        <h4>Dia da semana</h4>
-                        <h4>Descrição</h4>
-                        <h4>Categoria</h4>
-                        <h4>Valor</h4>
-                    </div>
+                    <HeaderTable />
+                    <TableRecords />
                 </div>
 
                 <div className="records">
@@ -27,15 +23,15 @@ function Dashboard() {
                                 <thead>
                                     <tr>
                                         <th>Entradas</th>
-                                        <th className='value-entries'>R$ 200,00</th>
+                                        <th className='value'>R$ 100,00</th>
                                     </tr>
                                     <tr className='exits'>
                                         <th>Saídas</th>
-                                        <th>R$ 150,00</th>
+                                        <th className='value-negative'>R$ 80,00</th>
                                     </tr>
                                     <tr className='balance'>
                                         <th>Saldo</th>
-                                        <th>R$ 222222</th>
+                                        <th className='value-balance'>R$ 20,00</th>
                                     </tr>
                                 </thead>
                             </table>
