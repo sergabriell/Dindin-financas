@@ -65,7 +65,3 @@ label {
 .content-signup button:hover {
     opacity: 0.9;
 }
-
-.content-signup a {
-    text-decoration: none;
-}
