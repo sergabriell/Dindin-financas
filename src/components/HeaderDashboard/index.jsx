@@ -3,6 +3,7 @@ import Logo from '../Logo';
 import Profile from '../../assets/profile.svg';
 import Logout from '../../assets/logout.svg';
 import { Link } from 'react-router-dom';
+import { clear } from '../../utils/localStorage';
 
 function HeaderDashboard({ name }) {
     return (
@@ -16,6 +17,7 @@ function HeaderDashboard({ name }) {
                 <h3>{name}</h3>
                 <Link to='/sign-in'>
                     <img
+                        onClick={() => clear()}
                         className='logout'
                         src={Logout}
                         alt='Logout'

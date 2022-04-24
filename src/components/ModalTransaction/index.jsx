@@ -37,8 +37,6 @@ function ModalTransaction({ modal, setModal }) {
                     Authorization: `Bearer ${token}`
                 }
             })
-
-            console.log(response.data);
             if (response.status > 204) {
                 return;
             }

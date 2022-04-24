@@ -20,6 +20,7 @@ function Dashboard() {
     const [user, setUser] = useState('');
     const [entry, setEntry] = useState('');
     const [exit, setExit] = useState('');
+    const [sum, setSum] = useState('');
 
     async function loadTransactions() {
         try {
@@ -35,27 +36,36 @@ function Dashboard() {
         }
     }
 
-    // useEffect(() => {
-    //     async function handleEntryAndExits() {
-    //         const transactionsData = await transactions;
-    //         const entries = transactionsData.filter((transaction) => {
-    //             return transaction.tipo === 'entrada';
-    //         })
+    useEffect(() => {
+        async function handleEntryAndExits() {
+            let valueEntries = 0;
+            let valueExits = 0;
+            let valueSum = 0;
 
-    //         entries.forEach((transaction) => {
-    //             setEntry(transaction.valor + entry);
-    //         })
+            const transactionsData = await transactions;
+            const entries = transactionsData.filter((transaction) => {
+                return transaction.tipo === 'entrada';
+            })
 
-    //         const exits = transactionsData.filter((transaction) => {
-    //             return transaction.tipo === 'saida'
-    //         })
+            entries.forEach((transaction) => {
+                valueEntries += transaction.valor;
+            })
 
-    //         exits.forEach((transaction) => {
-    //             setExit(transaction.valor + exit);
-    //         })
-    //     }
-    //     handleEntryAndExits();
-    // }, [modal])
+            const exits = transactionsData.filter((transaction) => {
+                return transaction.tipo === 'saida'
+            })
+
+            exits.forEach((transaction) => {
+                valueExits += transaction.valor;
+            })
+            valueSum = valueEntries - valueExits;
+
+            setEntry(valueEntries);
+            setExit(valueExits);
+            setSum(valueSum)
+        }
+        handleEntryAndExits();
+    }, [loadTransactions])
 
     useEffect(() => {
         loadTransactions();
@@ -116,7 +126,7 @@ function Dashboard() {
                                     </tr>
                                     <tr className='balance'>
                                         <th>Saldo</th>
-                                        <th className='value-balance'>R$ 20,00</th>
+                                        <th className='value-balance'>R$ {sum}</th>
                                     </tr>
                                 </thead>
                             </table>
