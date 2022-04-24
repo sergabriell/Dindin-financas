@@ -1,15 +1,20 @@
 import './styles.css';
 import IconEditing from '../../assets/icon-editing.svg';
 import IconDelete from '../../assets/icon-delete.svg';
+import { format } from 'date-fns';
 
-function TableRecords() {
+function TableRecords({ data, descricao, categoria, valor, tipo }) {
+
+    const diaDaSemana = format(new Date(data), 'EEEE');
+    const dataTratada = format(new Date(data), 'dd/MM/yy');
+
     return (
         <div className="data-records">
-            <h4 className='format-date'>01/09/21</h4>
-            <h4>Quarta</h4>
-            <h4>Venda dos brigadeiros</h4>
-            <h4>Pix</h4>
-            <h4 className='value'>R$ 100,00</h4>
+            <h4 className='format-date'>{dataTratada}</h4>
+            <h4>{diaDaSemana}</h4>
+            <h4>{descricao}</h4>
+            <h4>{categoria}</h4>
+            <h4 className={tipo === 'saida' ? 'value-negative' : 'value-balance'}>R$ {valor}</h4>
             <div className="editing-area">
                 <img
                     src={IconEditing}

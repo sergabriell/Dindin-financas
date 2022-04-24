@@ -18,28 +18,49 @@ function Dashboard() {
     const [modal, setModal] = useState(false);
     const [transactions, setTransactions] = useState([]);
     const [user, setUser] = useState('');
+    const [entry, setEntry] = useState('');
+    const [exit, setExit] = useState('');
 
-    async function handleTransactions() {
+    async function loadTransactions() {
+        try {
+            const response = await api.get(`/transacao`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
+            setTransactions(response.data);
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
     }
 
+    // useEffect(() => {
+    //     async function handleEntryAndExits() {
+    //         const transactionsData = await transactions;
+    //         const entries = transactionsData.filter((transaction) => {
+    //             return transaction.tipo === 'entrada';
+    //         })
+
+    //         entries.forEach((transaction) => {
+    //             setEntry(transaction.valor + entry);
+    //         })
+
+    //         const exits = transactionsData.filter((transaction) => {
+    //             return transaction.tipo === 'saida'
+    //         })
+
+    //         exits.forEach((transaction) => {
+    //             setExit(transaction.valor + exit);
+    //         })
+    //     }
+    //     handleEntryAndExits();
+    // }, [modal])
+
     useEffect(() => {
-        async function loadTransactions() {
-            try {
-                const response = await api.get(`/transacao`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                console.log(response.data);
-            } catch (error) {
-                console.log(error.response.data.message);
-            }
-        }
-
         loadTransactions();
-    }, [])
+
+    }, [modal])
 
     useEffect(() => {
         async function handleUser() {
@@ -67,7 +88,16 @@ function Dashboard() {
             <div className="content-dashboard">
                 <div className="info-records">
                     <HeaderTable />
-                    <TableRecords />
+                    {transactions.map((transaction) => (
+                        <TableRecords
+                            key={transaction.id}
+                            data={transaction.data}
+                            descricao={transaction.descricao}
+                            categoria={transaction.categoria_nome}
+                            valor={transaction.valor}
+                            tipo={transaction.tipo}
+                        />
+                    ))}
                 </div>
 
                 <div className="records">
@@ -78,11 +108,11 @@ function Dashboard() {
                                 <thead>
                                     <tr>
                                         <th>Entradas</th>
-                                        <th className='value'>R$ 100,00</th>
+                                        <th className='value'>R$ {entry}</th>
                                     </tr>
                                     <tr className='exits'>
                                         <th>Saídas</th>
-                                        <th className='value-negative'>R$ 80,00</th>
+                                        <th className='value-negative'>R$ {exit}</th>
                                     </tr>
                                     <tr className='balance'>
                                         <th>Saldo</th>
