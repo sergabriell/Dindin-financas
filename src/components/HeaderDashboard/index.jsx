@@ -4,7 +4,7 @@ import Profile from '../../assets/profile.svg';
 import Logout from '../../assets/logout.svg';
 import { Link } from 'react-router-dom';
 
-function HeaderDashboard() {
+function HeaderDashboard({ name }) {
     return (
         <header>
             <Logo />
@@ -13,7 +13,7 @@ function HeaderDashboard() {
                     src={Profile}
                     alt='Profile'
                 />
-                <h3>Sérgio</h3>
+                <h3>{name}</h3>
                 <Link to='/sign-in'>
                     <img
                         className='logout'
