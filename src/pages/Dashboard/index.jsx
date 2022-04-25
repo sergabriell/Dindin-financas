@@ -101,6 +101,8 @@ function Dashboard() {
                     {transactions.map((transaction) => (
                         <TableRecords
                             key={transaction.id}
+                            loadTransactions={loadTransactions}
+                            id_transaction={transaction.id}
                             data={transaction.data}
                             descricao={transaction.descricao}
                             categoria={transaction.categoria_nome}
