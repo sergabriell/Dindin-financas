@@ -4,16 +4,12 @@ import TableRecords from '../../components/TableRecords';
 import HeaderTable from '../../components/TableRecords/HeaderTable';
 import { useEffect, useState } from 'react';
 import { getItem } from '../../utils/localStorage';
-import { useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import ModalTransaction from '../../components/ModalTransaction';
 
 
 function Dashboard() {
     const token = getItem('token');
-    const userId = getItem('userId');
-
-    const navigate = useNavigate();
 
     const [modal, setModal] = useState(false);
     const [transactions, setTransactions] = useState([]);
@@ -65,12 +61,12 @@ function Dashboard() {
             setSum(valueSum)
         }
         handleEntryAndExits();
-    }, [loadTransactions])
+    })
 
     useEffect(() => {
         loadTransactions();
 
-    }, [modal])
+    })
 
     useEffect(() => {
         async function handleUser() {
@@ -87,7 +83,7 @@ function Dashboard() {
             }
         }
         handleUser()
-    }, [])
+    })
 
 
     return (

@@ -66,7 +66,7 @@ function ModalTransaction({ modal, setModal }) {
             }
         }
         handleCategories()
-    }, [])
+    })
 
     return (
         <div className="container-modal">
