@@ -1,3 +1,6 @@
+# Link para testar a aplicação no ar: [https://dindin-gabriel.netlify.app/](https://dindin-gabriel.netlify.app/)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
