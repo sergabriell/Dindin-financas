@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'https://desafio-backend-03-dindin.herokuapp.com',
+    baseURL: 'https://api-dindin-project.herokuapp.com',
     timeout: 10000,
     headers: { 'Content-Type': 'application/json' }
 })

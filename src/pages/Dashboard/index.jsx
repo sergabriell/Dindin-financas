@@ -44,7 +44,7 @@ function Dashboard() {
             })
 
             entries.forEach((transaction) => {
-                valueEntries += transaction.valor;
+                valueEntries += Number(transaction.valor);
             })
 
             const exits = transactionsData.filter((transaction) => {
@@ -52,7 +52,7 @@ function Dashboard() {
             })
 
             exits.forEach((transaction) => {
-                valueExits += transaction.valor;
+                valueExits += Number(transaction.valor);
             })
             valueSum = valueEntries - valueExits;
 
