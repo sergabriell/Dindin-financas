@@ -4,6 +4,7 @@ import api from '../../services/api';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { setItem } from '../../utils/localStorage';
+import { notifyError } from '../../utils/toast';
 
 function SignIn() {
     const navigate = useNavigate();
@@ -15,7 +16,7 @@ function SignIn() {
         e.preventDefault();
 
         if (!email || !password) {
-            return;
+            return notifyError('Informe o email e a senha!');
         }
 
         try {
@@ -25,7 +26,7 @@ function SignIn() {
             })
 
             if (response.status > 204) {
-                return;
+                return
             }
 
             const { token, usuario } = response.data;
@@ -35,7 +36,7 @@ function SignIn() {
 
             navigate('/dashboard');
         } catch (error) {
-            console.log(error.response.data.message);
+            notifyError(error.response.data);
         }
     }
 
@@ -63,7 +64,6 @@ function SignIn() {
                         <input
                             type='text'
                             value={email}
-                            required
                             onChange={(e) => setEmail(e.target.value)}
                         />
                     </label>
@@ -72,7 +72,6 @@ function SignIn() {
                         <input
                             type='password'
                             value={password}
-                            required
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </label>

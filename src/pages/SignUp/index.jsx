@@ -3,6 +3,7 @@ import Logo from '../../components/Logo';
 import './styles.css';
 import api from '../../services/api';
 import { useState } from 'react';
+import { notifyError, notifySucess } from '../../utils/toast';
 
 function SignUp() {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ function SignUp() {
             }
 
             if (password !== confPassword) {
-                return;
+                return notifyError('As senhas precisam ser iguais.');
             }
 
             const response = await api.post('/usuario', {
@@ -33,10 +34,10 @@ function SignUp() {
             if (response.status > 204) {
                 return;
             }
-
+            notifySucess('Cadastro realizado!')
             navigate('/');
         } catch (error) {
-            console.log(error.response.data.message);
+            notifyError(error.response.data);
         }
     }
 
@@ -91,6 +92,7 @@ function SignUp() {
                 <p href='#'>Já tem cadastro? <Link to='/sign-in'> Clique aqui!</Link></p>
 
             </div>
+
         </div>
     );
 }

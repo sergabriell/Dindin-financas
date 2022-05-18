@@ -4,6 +4,7 @@ import IconDelete from '../../assets/icon-delete.svg';
 import { format } from 'date-fns';
 import api from '../../services/api';
 import { getItem } from '../../utils/localStorage';
+import { notifyError, notifySucess } from '../../utils/toast';
 
 function TableRecords({ id_transaction, data, descricao, categoria, valor, tipo, loadTransactions }) {
 
@@ -23,9 +24,10 @@ function TableRecords({ id_transaction, data, descricao, categoria, valor, tipo,
             if (response.status > 204) {
                 return;
             }
+            notifySucess('Registro excluido!');
             loadTransactions();
         } catch (error) {
-            console.log(error.message);
+            notifyError(error.response.data);
         }
     }
 

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getItem } from '../../utils/localStorage';
 import api from '../../services/api';
 import ModalTransaction from '../../components/ModalTransaction';
+import { notifyError } from '../../utils/toast';
 
 
 function Dashboard() {
@@ -28,7 +29,7 @@ function Dashboard() {
 
             setTransactions(response.data);
         } catch (error) {
-            console.log(error.response.data.message);
+            notifyError(error.response.data);
         }
     }
 
@@ -79,7 +80,7 @@ function Dashboard() {
 
                 setUser(response.data.nome);
             } catch (error) {
-                console.log(error.response.data.message);
+                notifyError(error.response.data);
             }
         }
         handleUser()

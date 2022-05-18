@@ -3,6 +3,7 @@ import Close from '../../assets/close.svg';
 import { useEffect, useState } from 'react';
 import api from '../../services/api';
 import { getItem } from '../../utils/localStorage';
+import { notifyError, notifySucess } from '../../utils/toast';
 
 function ModalTransaction({ modal, setModal }) {
     const token = getItem('token');
@@ -40,10 +41,10 @@ function ModalTransaction({ modal, setModal }) {
             if (response.status > 204) {
                 return;
             }
-
+            notifySucess('Registro realizado!')
             setModal(!modal);
         } catch (error) {
-            console.log(error.response.data.message);
+            notifyError(error.response.data);
         }
     }
 

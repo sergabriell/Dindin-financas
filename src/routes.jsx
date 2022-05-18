@@ -3,6 +3,7 @@ import Dashboard from './pages/Dashboard';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import { getItem } from './utils/localStorage';
+import { ToastContainer } from 'react-toastify';
 
 function ProtectedRoutes({ redirectTo }) {
     const isAuthenticated = getItem('token');
@@ -13,18 +14,21 @@ function ProtectedRoutes({ redirectTo }) {
 function MainRoutes() {
 
     return (
-        <Routes>
-            <Route path='/'>
-                <Route path='/' element={<SignIn />} />
-                <Route path='/sign-in' element={<SignIn />} />
-            </Route>
+        <>
+            <ToastContainer />
+            <Routes>
+                <Route path='/'>
+                    <Route path='/' element={<SignIn />} />
+                    <Route path='/sign-in' element={<SignIn />} />
+                </Route>
 
-            <Route path='/sign-up' element={<SignUp />} />
+                <Route path='/sign-up' element={<SignUp />} />
 
-            <Route element={<ProtectedRoutes redirectTo='/' />}>
-                <Route path='/dashboard' element={<Dashboard />} />
-            </Route>
-        </Routes>
+                <Route element={<ProtectedRoutes redirectTo='/' />}>
+                    <Route path='/dashboard' element={<Dashboard />} />
+                </Route>
+            </Routes>
+        </>
 
     )
 }
