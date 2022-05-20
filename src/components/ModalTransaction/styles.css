@@ -89,6 +89,12 @@ select {
     background: #FF576B;
 }
 
+.button-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .modal button {
     all: unset;
     background: #7978D9;

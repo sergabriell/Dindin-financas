@@ -32,8 +32,9 @@ function SignUp() {
             })
 
             if (response.status > 204) {
-                return;
+                return notifyError(response.data);
             }
+
             notifySucess('Cadastro realizado!')
             navigate('/');
         } catch (error) {
@@ -42,58 +43,61 @@ function SignUp() {
     }
 
     return (
-        <div className="container-signup">
-            <Logo />
-            <div className="content-signup">
-                <div className="title-signup">
-                    <h1>Cadastre-se</h1>
+        <>
+
+            <div className="container-signup">
+                <Logo />
+                <div className="content-signup">
+                    <div className="title-signup">
+                        <h1>Cadastre-se</h1>
+                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <label>
+                            Nome
+                            <input
+                                type="text"
+                                value={name}
+                                required
+                                onChange={(e) => setName(e.target.value)}
+                            />
+                        </label>
+                        <label>
+                            E-mail
+                            <input
+                                type="text"
+                                value={email}
+                                required
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </label>
+                        <label>
+                            Senha
+                            <input
+                                type="password"
+                                value={password}
+                                required
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </label>
+                        <label>
+                            Confirmação de senha
+                            <input
+                                type="password"
+                                value={confPassword}
+                                required
+                                onChange={(e) => setConfPassword(e.target.value)}
+                            />
+                        </label>
+
+                        <button>Cadastrar</button>
+                    </form>
+
+                    <p href='#'>Já tem cadastro? <Link to='/sign-in'> Clique aqui!</Link></p>
+
                 </div>
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Nome
-                        <input
-                            type="text"
-                            value={name}
-                            required
-                            onChange={(e) => setName(e.target.value)}
-                        />
-                    </label>
-                    <label>
-                        E-mail
-                        <input
-                            type="text"
-                            value={email}
-                            required
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </label>
-                    <label>
-                        Senha
-                        <input
-                            type="password"
-                            value={password}
-                            required
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </label>
-                    <label>
-                        Confirmação de senha
-                        <input
-                            type="password"
-                            value={confPassword}
-                            required
-                            onChange={(e) => setConfPassword(e.target.value)}
-                        />
-                    </label>
-
-                    <button>Cadastrar</button>
-                </form>
-
-                <p href='#'>Já tem cadastro? <Link to='/sign-in'> Clique aqui!</Link></p>
 
             </div>
-
-        </div>
+        </>
     );
 }
 

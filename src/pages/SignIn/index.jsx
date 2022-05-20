@@ -26,7 +26,10 @@ function SignIn() {
             })
 
             if (response.status > 204) {
-                return
+                if (response.data.erro) {
+                    return notifyError(response.data.erro);
+                }
+                return notifyError(response.data);
             }
 
             const { token, usuario } = response.data;
@@ -36,6 +39,7 @@ function SignIn() {
 
             navigate('/dashboard');
         } catch (error) {
+            console.log('entrei');
             notifyError(error.response.data);
         }
     }

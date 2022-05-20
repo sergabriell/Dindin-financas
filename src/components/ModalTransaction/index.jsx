@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './styles.css';
 import Close from '../../assets/close.svg';
 import { useEffect, useState } from 'react';
@@ -5,7 +6,7 @@ import api from '../../services/api';
 import { getItem } from '../../utils/localStorage';
 import { notifyError, notifySucess } from '../../utils/toast';
 
-function ModalTransaction({ modal, setModal }) {
+function ModalTransaction({ modal, setModal, loadTransactions }) {
     const token = getItem('token');
     const userId = getItem('userId');
 
@@ -25,6 +26,7 @@ function ModalTransaction({ modal, setModal }) {
         if (!valor || !categoria || !data) {
             return;
         }
+
         try {
             const response = await api.post(`/transacao`, {
                 tipo,
@@ -39,35 +41,37 @@ function ModalTransaction({ modal, setModal }) {
                 }
             })
             if (response.status > 204) {
-                return;
+                return notifyError(response.data);
             }
             notifySucess('Registro realizado!')
+            loadTransactions()
             setModal(!modal);
         } catch (error) {
             notifyError(error.response.data);
         }
     }
 
+    async function handleCategories() {
+        try {
+            const response = await api.get('/categoria', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            setCategories([...response.data])
+        } catch (error) {
+            console.log(error.response.data.message);
+        }
+    }
+
+    useEffect(() => {
+        handleCategories();
+    }, []);
+
     useEffect(() => {
         entry ? setTipo('entrada') : setTipo('saida');
     }, [entry])
-
-    useEffect(() => {
-        async function handleCategories() {
-            try {
-                const response = await api.get('/categoria', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                setCategories([...response.data])
-            } catch (error) {
-                console.log(error.response.data.message);
-            }
-        }
-        handleCategories()
-    })
 
     return (
         <div className="container-modal">
@@ -131,7 +135,9 @@ function ModalTransaction({ modal, setModal }) {
                             onChange={(e) => setDescricao(e.target.value)}
                         />
                     </label>
-                    <button>Confirmar</button>
+                    <div className="button-modal">
+                        <button>Confirmar</button>
+                    </div>
                 </form>
             </div>
         </div>

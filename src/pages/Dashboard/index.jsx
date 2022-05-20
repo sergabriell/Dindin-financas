@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './styles.css';
 import HeaderDashboard from '../../components/HeaderDashboard';
 import TableRecords from '../../components/TableRecords';
@@ -27,65 +28,58 @@ function Dashboard() {
                 }
             });
 
+            if (!response.data) {
+                return;
+            }
+
             setTransactions(response.data);
+            handleEntryAndExits();
+        } catch (error) {
+            notifyError(error.response.data);
+        }
+    }
+
+    async function handleEntryAndExits() {
+        try {
+            const response = await api.get('/transacao/extrato', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
+            if (response.status > 204) {
+                return notifyError(response.data);
+            }
+            setEntry(response.data.entrada);
+            setExit(response.data.saida);
+            setSum(Number(response.data.entrada) - Number(response.data.saida));
+        } catch (error) {
+            notifyError(error.response.data);
+        }
+    }
+
+    async function handleUser() {
+        try {
+            const response = await api.get('/usuario', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
+            if (response.status > 204) {
+                return notifyError(response.data);
+            }
+            setUser(response.data.nome);
         } catch (error) {
             notifyError(error.response.data);
         }
     }
 
     useEffect(() => {
-        async function handleEntryAndExits() {
-            let valueEntries = 0;
-            let valueExits = 0;
-            let valueSum = 0;
-
-            const transactionsData = await transactions;
-            const entries = transactionsData.filter((transaction) => {
-                return transaction.tipo === 'entrada';
-            })
-
-            entries.forEach((transaction) => {
-                valueEntries += Number(transaction.valor);
-            })
-
-            const exits = transactionsData.filter((transaction) => {
-                return transaction.tipo === 'saida'
-            })
-
-            exits.forEach((transaction) => {
-                valueExits += Number(transaction.valor);
-            })
-            valueSum = valueEntries - valueExits;
-
-            setEntry(valueEntries);
-            setExit(valueExits);
-            setSum(valueSum)
-        }
-        handleEntryAndExits();
-    })
-
-    useEffect(() => {
-        loadTransactions();
-
-    })
-
-    useEffect(() => {
-        async function handleUser() {
-            try {
-                const response = await api.get('/usuario', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-
-                setUser(response.data.nome);
-            } catch (error) {
-                notifyError(error.response.data);
-            }
-        }
+        loadTransactions()
         handleUser()
-    })
 
+    }, [])
 
     return (
         <div className="container-dashboard">
@@ -139,6 +133,7 @@ function Dashboard() {
                 <ModalTransaction
                     modal={modal}
                     setModal={setModal}
+                    loadTransactions={loadTransactions}
                 /> : ''}
         </div>
     );
