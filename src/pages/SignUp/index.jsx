@@ -16,15 +16,15 @@ function SignUp() {
     async function handleSubmit(e) {
         e.preventDefault();
 
+        if (!name || !email || !password || !confPassword) {
+            return notifyError('Preencha todos os campos.')
+        }
+
+        if (password !== confPassword) {
+            return notifyError('As senhas precisam ser iguais.');
+        }
+
         try {
-            if (!name || !email || !password || !confPassword) {
-                return;
-            }
-
-            if (password !== confPassword) {
-                return notifyError('As senhas precisam ser iguais.');
-            }
-
             const response = await api.post('/usuario', {
                 nome: name,
                 email,
@@ -57,7 +57,6 @@ function SignUp() {
                             <input
                                 type="text"
                                 value={name}
-                                required
                                 onChange={(e) => setName(e.target.value)}
                             />
                         </label>
@@ -66,7 +65,6 @@ function SignUp() {
                             <input
                                 type="text"
                                 value={email}
-                                required
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                         </label>
@@ -75,7 +73,6 @@ function SignUp() {
                             <input
                                 type="password"
                                 value={password}
-                                required
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </label>
@@ -84,7 +81,6 @@ function SignUp() {
                             <input
                                 type="password"
                                 value={confPassword}
-                                required
                                 onChange={(e) => setConfPassword(e.target.value)}
                             />
                         </label>

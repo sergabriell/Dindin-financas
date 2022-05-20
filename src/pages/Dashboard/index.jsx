@@ -8,6 +8,7 @@ import { getItem } from '../../utils/localStorage';
 import api from '../../services/api';
 import ModalTransaction from '../../components/ModalTransaction';
 import { notifyError } from '../../utils/toast';
+import { formatToMoney } from '../../utils/formatters';
 
 
 function Dashboard() {
@@ -80,7 +81,6 @@ function Dashboard() {
         handleUser()
 
     }, [])
-
     return (
         <div className="container-dashboard">
             <HeaderDashboard
@@ -111,15 +111,15 @@ function Dashboard() {
                                 <thead>
                                     <tr>
                                         <th>Entradas</th>
-                                        <th className='value'>R$ {entry}</th>
+                                        <th className='value'>{formatToMoney(Number(entry))}</th>
                                     </tr>
                                     <tr className='exits'>
                                         <th>Saídas</th>
-                                        <th className='value-negative'>R$ {exit}</th>
+                                        <th className='value-negative'>{formatToMoney(Number(exit))}</th>
                                     </tr>
                                     <tr className='balance'>
                                         <th>Saldo</th>
-                                        <th className='value-balance'>R$ {sum}</th>
+                                        <th className='value-balance'>{formatToMoney(sum)}</th>
                                     </tr>
                                 </thead>
                             </table>

@@ -1,16 +1,13 @@
 import './styles.css';
 import IconEditing from '../../assets/icon-editing.svg';
 import IconDelete from '../../assets/icon-delete.svg';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale'
 
 import api from '../../services/api';
 import { getItem } from '../../utils/localStorage';
 import { notifyError, notifySucess } from '../../utils/toast';
+import { formatToDate, formatToMoney, formatToWeekDay } from '../../utils/formatters';
 
 function TableRecords({ id_transaction, data, descricao, categoria, valor, tipo, loadTransactions }) {
-    const diaDaSemana = format(new Date(data), 'EEEE', { locale: ptBR }).replace('-feira', '');
-    const dataTratada = format(new Date(data), 'dd/MM/yy', { locale: ptBR });
 
 
     async function handleDelete() {
@@ -24,7 +21,7 @@ function TableRecords({ id_transaction, data, descricao, categoria, valor, tipo,
             });
 
             if (response.status > 204) {
-                return;
+                return notifyError(response.data);
             }
             notifySucess('Registro excluido!');
             loadTransactions();
@@ -33,14 +30,13 @@ function TableRecords({ id_transaction, data, descricao, categoria, valor, tipo,
         }
     }
 
-
     return (
         <div className="data-records">
-            <h4 className='format-date'>{dataTratada}</h4>
-            <h4>{diaDaSemana}</h4>
+            <h4 className='format-date'>{formatToDate(data)}</h4>
+            <h4>{formatToWeekDay(data)}</h4>
             <h4>{descricao}</h4>
             <h4>{categoria}</h4>
-            <h4 className={tipo === 'saida' ? 'value-negative' : 'value-balance'}>R$ {valor}</h4>
+            <h4 className={tipo === 'saida' ? 'value-negative' : 'value-balance'}>{formatToMoney(Number(valor))}</h4>
             <div className="editing-area">
                 <img
                     src={IconEditing}

@@ -24,7 +24,7 @@ function ModalTransaction({ modal, setModal, loadTransactions }) {
         e.preventDefault();
 
         if (!valor || !categoria || !data) {
-            return;
+            return notifyError('Preencha todos os campos.');
         }
 
         try {

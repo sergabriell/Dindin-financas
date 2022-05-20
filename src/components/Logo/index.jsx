@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import './styles.css';
 import ImgLogo from '../../assets/logo.svg';
 
