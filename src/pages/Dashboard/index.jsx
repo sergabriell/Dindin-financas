@@ -6,18 +6,12 @@ import HeaderTable from '../../components/TableRecords/HeaderTable';
 import ModalTransaction from '../../components/ModalTransaction';
 
 import { useEffect, useState } from 'react';
-import { getItem } from '../../utils/localStorage';
 import { notifyError } from '../../utils/toast';
 import { formatToMoney } from '../../utils/formatters';
-import { useNavigate } from 'react-router-dom';
-import { clear } from '../../utils/localStorage';
 import { requisitionGet } from '../../utils/requisitions';
 
 
 function Dashboard() {
-    const navigate = useNavigate();
-
-    const token = getItem('token');
 
     const [modal, setModal] = useState(false);
     const [transactions, setTransactions] = useState([]);
@@ -32,13 +26,6 @@ function Dashboard() {
 
             if (!response.data) {
                 return;
-            }
-
-            if (response.status === 401) {
-                if (token) {
-                    clear();
-                }
-                navigate('/');
             }
 
             setTransactions(response.data);
