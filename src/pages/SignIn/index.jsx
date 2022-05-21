@@ -1,8 +1,9 @@
 import './styles.css';
 import Logo from '../../components/Logo';
 import api from '../../services/api';
-import { Link, useNavigate } from 'react-router-dom';
+
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { setItem } from '../../utils/localStorage';
 import { notifyError } from '../../utils/toast';
 

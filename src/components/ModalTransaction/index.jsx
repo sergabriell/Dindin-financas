@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './styles.css';
 import Close from '../../assets/close.svg';
+
 import { useEffect, useState } from 'react';
-import api from '../../services/api';
 import { getItem } from '../../utils/localStorage';
 import { notifyError, notifySucess } from '../../utils/toast';
+import { requisitionGet, requisitionPost } from '../../utils/requisitions';
 
 function ModalTransaction({ modal, setModal, loadTransactions }) {
-    const token = getItem('token');
     const userId = getItem('userId');
 
     const [valor, setValor] = useState('');
@@ -28,18 +28,16 @@ function ModalTransaction({ modal, setModal, loadTransactions }) {
         }
 
         try {
-            const response = await api.post(`/transacao`, {
+            const dataTransaction = {
                 tipo,
                 descricao,
                 valor,
                 data,
                 usuario_id: userId,
                 categoria_id: categoria
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            }
+            const response = await requisitionPost(`/transacao`, dataTransaction);
+
             if (response.status > 204) {
                 return notifyError(response.data);
             }
@@ -53,11 +51,7 @@ function ModalTransaction({ modal, setModal, loadTransactions }) {
 
     async function handleCategories() {
         try {
-            const response = await api.get('/categoria', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const response = await requisitionGet('/categoria')
 
             setCategories([...response.data])
         } catch (error) {

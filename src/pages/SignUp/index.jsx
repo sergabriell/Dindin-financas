@@ -1,34 +1,37 @@
-import { Link, useNavigate } from 'react-router-dom';
-import Logo from '../../components/Logo';
 import './styles.css';
+import Logo from '../../components/Logo';
 import api from '../../services/api';
+
 import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { notifyError, notifySucess } from '../../utils/toast';
 
 function SignUp() {
     const navigate = useNavigate();
 
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confPassword, setConfPassword] = useState('');
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confPassword: ''
+    })
 
     async function handleSubmit(e) {
         e.preventDefault();
 
-        if (!name || !email || !password || !confPassword) {
+        if (!form.name || !form.email || !form.password || !form.confPassword) {
             return notifyError('Preencha todos os campos.')
         }
 
-        if (password !== confPassword) {
+        if (form.password !== form.confPassword) {
             return notifyError('As senhas precisam ser iguais.');
         }
 
         try {
             const response = await api.post('/usuario', {
-                nome: name,
-                email,
-                senha: password
+                nome: form.name,
+                email: form.email,
+                senha: form.password
             })
 
             if (response.status > 204) {
@@ -40,6 +43,10 @@ function SignUp() {
         } catch (error) {
             notifyError(error.response.data);
         }
+    }
+
+    function handleChangeForm({ target }) {
+        setForm({ ...form, [target.name]: target.value });
     }
 
     return (
@@ -56,32 +63,36 @@ function SignUp() {
                             Nome
                             <input
                                 type="text"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                name="name"
+                                value={form.name}
+                                onChange={handleChangeForm}
                             />
                         </label>
                         <label>
                             E-mail
                             <input
                                 type="text"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                name='email'
+                                value={form.email}
+                                onChange={handleChangeForm}
                             />
                         </label>
                         <label>
                             Senha
                             <input
                                 type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                name="password"
+                                value={form.password}
+                                onChange={handleChangeForm}
                             />
                         </label>
                         <label>
                             Confirmação de senha
                             <input
                                 type="password"
-                                value={confPassword}
-                                onChange={(e) => setConfPassword(e.target.value)}
+                                name="confPassword"
+                                value={form.confPassword}
+                                onChange={handleChangeForm}
                             />
                         </label>
 

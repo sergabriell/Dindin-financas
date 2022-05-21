@@ -15,7 +15,6 @@ export function formatToDate(date) {
 export function formatToWeekDay(date) {
     const generatedDate = new Date(date);
 
-
     const weekDay = format(generatedDate, 'EEE', { locale: ptBR });
 
     return capitalizeWord(weekDay);

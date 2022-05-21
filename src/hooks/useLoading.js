@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import api from '../services/api';
+import { useEffect, useState } from "react";
 import { notifyError } from "../utils/toast";
 
 export function useLoading() {

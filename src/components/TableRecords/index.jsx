@@ -3,12 +3,14 @@ import IconEditing from '../../assets/icon-editing.svg';
 import IconDelete from '../../assets/icon-delete.svg';
 
 import api from '../../services/api';
+import { useState } from 'react'
 import { getItem } from '../../utils/localStorage';
 import { notifyError, notifySucess } from '../../utils/toast';
 import { formatToDate, formatToMoney, formatToWeekDay } from '../../utils/formatters';
+import ConfirmDelete from '../ConfirmDelete';
 
 function TableRecords({ id_transaction, data, descricao, categoria, valor, tipo, loadTransactions }) {
-
+    const [openConfirmDelete, setOpenConfirmDelete] = useState(false)
 
     async function handleDelete() {
         const token = getItem('token');
@@ -43,9 +45,14 @@ function TableRecords({ id_transaction, data, descricao, categoria, valor, tipo,
                     alt='Editar'
                 />
                 <img
-                    onClick={() => handleDelete()}
+                    onClick={() => setOpenConfirmDelete(true)}
                     src={IconDelete}
                     alt='Excluir'
+                />
+                <ConfirmDelete
+                    open={openConfirmDelete}
+                    handleClose={() => setOpenConfirmDelete(false)}
+                    handleConfirm={() => handleDelete()}
                 />
             </div>
         </div>

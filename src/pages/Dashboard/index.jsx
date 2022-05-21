@@ -3,15 +3,20 @@ import './styles.css';
 import HeaderDashboard from '../../components/HeaderDashboard';
 import TableRecords from '../../components/TableRecords';
 import HeaderTable from '../../components/TableRecords/HeaderTable';
+import ModalTransaction from '../../components/ModalTransaction';
+
 import { useEffect, useState } from 'react';
 import { getItem } from '../../utils/localStorage';
-import api from '../../services/api';
-import ModalTransaction from '../../components/ModalTransaction';
 import { notifyError } from '../../utils/toast';
 import { formatToMoney } from '../../utils/formatters';
+import { useNavigate } from 'react-router-dom';
+import { clear } from '../../utils/localStorage';
+import { requisitionGet } from '../../utils/requisitions';
 
 
 function Dashboard() {
+    const navigate = useNavigate();
+
     const token = getItem('token');
 
     const [modal, setModal] = useState(false);
@@ -23,14 +28,17 @@ function Dashboard() {
 
     async function loadTransactions() {
         try {
-            const response = await api.get(`/transacao`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const response = await requisitionGet('/transacao')
 
             if (!response.data) {
                 return;
+            }
+
+            if (response.status === 401) {
+                if (token) {
+                    clear();
+                }
+                navigate('/');
             }
 
             setTransactions(response.data);
@@ -42,15 +50,12 @@ function Dashboard() {
 
     async function handleEntryAndExits() {
         try {
-            const response = await api.get('/transacao/extrato', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
+            const response = await requisitionGet('/transacao/extrato')
 
             if (response.status > 204) {
                 return notifyError(response.data);
             }
+
             setEntry(response.data.entrada);
             setExit(response.data.saida);
             setSum(Number(response.data.entrada) - Number(response.data.saida));
@@ -61,11 +66,7 @@ function Dashboard() {
 
     async function handleUser() {
         try {
-            const response = await api.get('/usuario', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+            const response = await requisitionGet('/usuario');
 
             if (response.status > 204) {
                 return notifyError(response.data);
@@ -81,6 +82,7 @@ function Dashboard() {
         handleUser()
 
     }, [])
+
     return (
         <div className="container-dashboard">
             <HeaderDashboard

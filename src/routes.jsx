@@ -30,7 +30,7 @@ function MainRoutes() {
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
                 open={openLoading}
             >
-                <CircularProgress color="inherit" />
+                <CircularProgress />
             </Backdrop>
 
             <ToastContainer />
