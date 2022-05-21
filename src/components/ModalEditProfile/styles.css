@@ -1,0 +1,77 @@
+.container-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(61, 61, 61, 0.48);
+}
+
+.modal-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 770px;
+    width: 610px;
+    background: #FFFFFF;
+    border-radius: 20px;
+}
+
+.header-modal-profile {
+    align-self: flex-start;
+    margin: 10px 0 48px 64px;
+    position: relative;
+    width: 485px;
+}
+
+.header-modal-profile img {
+    position: absolute;
+    bottom: 6px;
+    right: 5px;
+    cursor: pointer;
+}
+
+.modal-profile input,
+select {
+    width: 485px;
+    height: 63px;
+    border-radius: 5px;
+    background: #FFFFFF;
+    border: 1px solid #555555;
+    font-size: 18px;
+    padding-left: 24px;
+    margin: 8.5px 0 26px 0;
+}
+
+.modal-profile label {
+    font-weight: 500;
+    font-size: 24px;
+    color: #484848;
+}
+
+.button-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-profile button {
+    all: unset;
+    background: #7978D9;
+    border-radius: 5px;
+    width: 236px;
+    height: 46px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.modal-profile button:hover {
+    opacity: 0.9;
+}

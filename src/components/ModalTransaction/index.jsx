@@ -5,10 +5,11 @@ import Close from '../../assets/close.svg';
 import { useEffect, useState } from 'react';
 import { getItem } from '../../utils/localStorage';
 import { notifyError, notifySucess } from '../../utils/toast';
-import { requisitionGet, requisitionPost } from '../../utils/requisitions';
+import api from '../../services/api';
 
 function ModalTransaction({ modal, setModal, loadTransactions }) {
     const userId = getItem('userId');
+    const token = getItem('token');
 
     const [valor, setValor] = useState('');
     const [tipo, setTipo] = useState('');
@@ -36,7 +37,11 @@ function ModalTransaction({ modal, setModal, loadTransactions }) {
                 usuario_id: userId,
                 categoria_id: categoria
             }
-            const response = await requisitionPost(`/transacao`, dataTransaction);
+            const response = await api.post(`/transacao`, dataTransaction, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
 
             if (response.status > 204) {
                 return notifyError(response.data);
@@ -51,11 +56,15 @@ function ModalTransaction({ modal, setModal, loadTransactions }) {
 
     async function handleCategories() {
         try {
-            const response = await requisitionGet('/categoria')
+            const response = await api.get(`/categoria`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
 
             setCategories([...response.data])
         } catch (error) {
-            console.log(error.response.data.message);
+            notifyError(error.response.data)
         }
     }
 

@@ -5,7 +5,8 @@ import Logout from '../../assets/logout.svg';
 import { Link } from 'react-router-dom';
 import { clear } from '../../utils/localStorage';
 
-function HeaderDashboard({ name }) {
+function HeaderDashboard({ name, openModalProfile }) {
+
     return (
         <header>
             <Logo />
@@ -13,6 +14,7 @@ function HeaderDashboard({ name }) {
                 <img
                     src={Profile}
                     alt='Profile'
+                    onClick={openModalProfile}
                 />
                 <h3>{name}</h3>
                 <Link to='/sign-in'>
@@ -24,6 +26,7 @@ function HeaderDashboard({ name }) {
                     />
                 </Link>
             </div>
+
         </header>
     )
 }

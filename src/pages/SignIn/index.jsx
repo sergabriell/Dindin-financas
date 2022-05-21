@@ -40,7 +40,6 @@ function SignIn() {
 
             navigate('/dashboard');
         } catch (error) {
-            console.log('entrei');
             notifyError(error.response.data);
         }
     }

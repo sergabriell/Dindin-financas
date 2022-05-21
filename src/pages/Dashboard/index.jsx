@@ -8,12 +8,18 @@ import ModalTransaction from '../../components/ModalTransaction';
 import { useEffect, useState } from 'react';
 import { notifyError } from '../../utils/toast';
 import { formatToMoney } from '../../utils/formatters';
-import { requisitionGet } from '../../utils/requisitions';
+import ModalEditProfile from '../../components/ModalEditProfile';
+import { clear, getItem } from '../../utils/localStorage';
+import api from '../../services/api';
+import { useNavigate } from 'react-router-dom';
 
 
 function Dashboard() {
+    const token = getItem('token');
+    const navigate = useNavigate();
 
     const [modal, setModal] = useState(false);
+    const [openModalProfile, setOpenModalProfile] = useState(false);
     const [transactions, setTransactions] = useState([]);
     const [user, setUser] = useState('');
     const [entry, setEntry] = useState('');
@@ -22,10 +28,20 @@ function Dashboard() {
 
     async function loadTransactions() {
         try {
-            const response = await requisitionGet('/transacao')
-
+            const response = await api.get(`/transacao`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             if (!response.data) {
                 return;
+            }
+
+            if (response.status === 401) {
+                if (token) {
+                    clear();
+                }
+                navigate('/');
             }
 
             setTransactions(response.data);
@@ -37,8 +53,11 @@ function Dashboard() {
 
     async function handleEntryAndExits() {
         try {
-            const response = await requisitionGet('/transacao/extrato')
-
+            const response = await api.get(`/transacao/extrato`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             if (response.status > 204) {
                 return notifyError(response.data);
             }
@@ -53,11 +72,15 @@ function Dashboard() {
 
     async function handleUser() {
         try {
-            const response = await requisitionGet('/usuario');
-
+            const response = await api.get(`/usuario`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             if (response.status > 204) {
                 return notifyError(response.data);
             }
+
             setUser(response.data.nome);
         } catch (error) {
             notifyError(error.response.data);
@@ -67,13 +90,13 @@ function Dashboard() {
     useEffect(() => {
         loadTransactions()
         handleUser()
-
-    }, [])
+    }, [openModalProfile])
 
     return (
         <div className="container-dashboard">
             <HeaderDashboard
                 name={user}
+                openModalProfile={() => setOpenModalProfile(true)}
             />
             <div className="content-dashboard">
                 <div className="info-records">
@@ -118,12 +141,18 @@ function Dashboard() {
 
                 </div>
             </div>
-            {modal ?
+            {modal &&
                 <ModalTransaction
                     modal={modal}
                     setModal={setModal}
                     loadTransactions={loadTransactions}
-                /> : ''}
+                />}
+
+            {openModalProfile &&
+                <ModalEditProfile
+                    open={openModalProfile}
+                    handleClose={() => setOpenModalProfile(false)}
+                />}
         </div>
     );
 }
