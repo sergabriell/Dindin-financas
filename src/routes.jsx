@@ -8,6 +8,9 @@ import { ToastContainer } from 'react-toastify';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useLoading } from './hooks/useLoading';
+import  ReactGA4 from 'react-ga4';
+
+ReactGA4.initialize("G-922CHPEDBK");
 
 function ProtectedRoutes({ redirectTo }) {
     const isAuthenticated = getItem('token');
