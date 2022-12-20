@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { setItem } from '../../utils/localStorage';
 import { notifyError } from '../../utils/toast';
+import ReactGA from 'react-ga4';
 
 function SignIn() {
     const navigate = useNavigate();
@@ -15,6 +16,12 @@ function SignIn() {
 
     async function handleSubmit(e) {
         e.preventDefault();
+        ReactGA.event({
+            action: "login_action",
+            category: "login_category",
+            label: "login_label",
+            value: "xxxx"
+        })
 
         if (!email || !password) {
             return notifyError('Informe o email e a senha!');
