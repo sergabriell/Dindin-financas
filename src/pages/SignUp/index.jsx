@@ -5,6 +5,7 @@ import api from '../../services/api';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { notifyError, notifySucess } from '../../utils/toast';
+import ReactGA from 'react-ga4';
 
 function SignUp() {
     const navigate = useNavigate();
@@ -39,6 +40,10 @@ function SignUp() {
             }
 
             notifySucess('Cadastro realizado!')
+            ReactGA.event({
+                category: 'User',
+                action: 'Created an Account'
+                });
             navigate('/');
         } catch (error) {
             notifyError(error.response.data);
