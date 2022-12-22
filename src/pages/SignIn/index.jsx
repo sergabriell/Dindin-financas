@@ -16,12 +16,7 @@ function SignIn() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        ReactGA.event({
-            action: "login_action",
-            category: "login_category",
-            label: "login_label",
-            value: "xxxx"
-        })
+        
 
         if (!email || !password) {
             return notifyError('Informe o email e a senha!');
@@ -44,6 +39,12 @@ function SignIn() {
 
             setItem('token', token);
             setItem('userId', usuario.id);
+            ReactGA.event({
+            action: "login_action",
+            category: "login_category",
+            label: "login_label",
+            value: "xxxx"
+            })
             ReactGA.set({ userId: usuario.id, ['tracker2'] });
 
             navigate('/dashboard');
