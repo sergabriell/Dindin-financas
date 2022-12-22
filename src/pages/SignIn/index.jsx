@@ -39,13 +39,15 @@ function SignIn() {
 
             setItem('token', token);
             setItem('userId', usuario.id);
+
             ReactGA.event({
             action: "login_action",
             category: "login_category",
             label: "login_label",
             value: "xxxx"
-            })
-            ReactGA.set({ userId: usuario.id, ['tracker2'] });
+            });
+
+            ReactGA.set({ userId: usuario.id});
 
             navigate('/dashboard');
         } catch (error) {
