@@ -44,7 +44,7 @@ function SignIn() {
             action: "login_action",
             category: "login_category",
             label: "login_label",
-            value: "xxxx"
+            value: usuario.id
             });
 
             ReactGA.set({ userId: usuario.id});
