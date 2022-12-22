@@ -41,10 +41,17 @@ function SignIn() {
             setItem('userId', usuario.id);
 
             ReactGA.event({
-            action: "login_action",
-            category: "login_category",
-            label: "login_label",
-            value: usuario.id
+                action: "login_action",
+                category: "login_category",
+                label: "login_label",
+                value: "xxxx"
+            });
+
+            ReactGA.event({
+                action: "userID",
+                category: "userID",
+                label: "id",
+                value: usuario.id
             });
 
             ReactGA.set({ userId: usuario.id});
