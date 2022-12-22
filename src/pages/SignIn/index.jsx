@@ -44,6 +44,7 @@ function SignIn() {
 
             setItem('token', token);
             setItem('userId', usuario.id);
+            ReactGA.set({ userId: usuario.id, ['tracker2'] });
 
             navigate('/dashboard');
         } catch (error) {
